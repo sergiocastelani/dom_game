@@ -73,31 +73,31 @@ function animationLoop(timestamp)
   //collisions
   if(chest && Collision.collide(player, chest, 10))
   {
-    endGame('Parabéns!! Você venceu!');
+    endGame('You made it!! Congratulations!');
     return;
   }
 
   if (!Collision.collideAny([player], allBridges, 21))
   {
-    endGame('Ops!! Caiu na água.');
+    endGame('Oops!! You fell into the water.');
     return;
   }
 
   if (Collision.collideAny([player], allRocks, 20, 10))
   {
-    endGame('Rachou a cuca na pedra. Tente novamente.');
+    endGame('You cracked your head on the stone. Try again.');
     return;
   }
 
   if (Collision.collideAny([player], allBalls, 10, 0))
   {
-    endGame('Uii!! Esse canhão machuca.');
+    endGame('Ugh!! This cannon hurts.');
     return;
   }
 
   if (player.offsetLeft > gameArea.clientWidth)
   {
-    endGame('Ao infinito e além... Tente novamente.');
+    endGame('To infinity and beyond... Try again.');
     return;
   }
 
