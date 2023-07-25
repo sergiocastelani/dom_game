@@ -8,7 +8,13 @@ const chest = document.getElementById('chest');
 const player = document.getElementById('player');
 const gameArea = document.getElementById('gameArea');
 
+const playerStartPosition = {x:player.offsetLeft, y:player.offsetTop};
+
+//game state
 let lastFrameTime = undefined;
+let lastShootTime = performance.now();
+
+//
 
 function animationLoop(timestamp)
 {
@@ -33,7 +39,7 @@ function animationLoop(timestamp)
   //collisions
   player.remove();
   gameArea.appendChild(player);
-  
+
   if(Collision.collide(player, chest, 10))
   {
     endGame('Parabéns!! Vocé venceu!');
@@ -99,7 +105,6 @@ function removeOldBalls()
   ballsToRemove.forEach(ball => ball.remove());  
 }
 
-let lastShootTime = performance.now();
 function shootCannon(timestamp)
 {
   const cannonInterval = 600; //ms
@@ -123,10 +128,21 @@ function shootCannon(timestamp)
 
 function endGame(message)
 {
+  lastFrameTime = undefined;
+  lastShootTime = performance.now();
+  player.currentPosition = undefined;
+
   player.src = "./images/player_stop.png";
+
   setTimeout(() => {
     alert(message);
-    history.go(0);
+
+    player.style.left = playerStartPosition.x + 'px';
+    player.style.top = playerStartPosition.y + 'px';
+
+    const ballsToRemove = [...allBalls];
+    ballsToRemove.forEach(ball => ball.remove());
+
   }, 100);
 }
 
