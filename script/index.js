@@ -13,7 +13,10 @@ let lastFrameTime = undefined;
 function animationLoop(timestamp)
 {
   if (lastFrameTime === undefined)
+  {
     lastFrameTime = timestamp;
+    player.src = "./images/player.gif"
+  }
 
   const deltaTime = timestamp - lastFrameTime;
   lastFrameTime = timestamp;
@@ -30,29 +33,25 @@ function animationLoop(timestamp)
   //collisions
   if(Collision.collide(player, chest, 10))
   {
-    alert('Parabéns!! Vocé venceu!');
-    history.go(0);
+    endGame('Parabéns!! Vocé venceu!');
     return;
   }
 
   if (!Collision.collideAny([player], allBridges, 21))
   {
-    alert('Ops!! Caiu na água.');
-    history.go(0);
+    endGame('Ops!! Caiu na água.');
     return;
   }
 
   if (Collision.collideAny([player], allRocks, 20, 10))
   {
-    alert('Rachou a cuca na pedra. Tente novamente.');
-    history.go(0);
+    endGame('Rachou a cuca na pedra. Tente novamente.');
     return;
   }
 
   if (Collision.collideAny([player], allBalls, 10, 0))
   {
-    alert('Uii!! Esse canhão machuca.');
-    history.go(0);
+    endGame('Uii!! Esse canhão machuca.');
     return;
   }
 
@@ -117,6 +116,15 @@ function shootCannon(timestamp)
     }
 
   }
+}
+
+function endGame(message)
+{
+  player.src = "./images/player_stop.png";
+  setTimeout(() => {
+    alert(message);
+    history.go(0);
+  }, 100);
 }
 
 document.getElementById('startButton')
