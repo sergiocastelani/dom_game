@@ -65,7 +65,7 @@ function animationLoop(timestamp)
   removeOldBalls();
 
   //collisions
-  if(Collision.collide(player, chest, 10))
+  if(chest && Collision.collide(player, chest, 10))
   {
     endGame('Parabéns!! Você venceu!');
     return;
@@ -86,6 +86,12 @@ function animationLoop(timestamp)
   if (Collision.collideAny([player], allBalls, 10, 0))
   {
     endGame('Uii!! Esse canhão machuca.');
+    return;
+  }
+
+  if (player.offsetLeft > gameArea.clientWidth)
+  {
+    endGame('Ao infinito e além... Tente novamente.');
     return;
   }
 
