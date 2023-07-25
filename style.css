@@ -6,6 +6,17 @@ body {
   padding: 0;
 }
 
+#startButton {
+  padding: 10px;
+  margin: 0 auto;
+  background-color: dodgerblue;
+  color: white;
+  border: 0px;
+  border-radius: 10px;
+  font-size: 24pt;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 #gameArea {
   overflow: hidden;
   position: relative;
@@ -37,7 +48,7 @@ body {
   width: 50px;
   height: 50px;
   top: 0px;
-  left: 320px;
+  left: 0px;
 }
 
 .ball {
