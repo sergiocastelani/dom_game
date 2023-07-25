@@ -17,6 +17,9 @@ body {
   font-size: 24pt;
   cursor: pointer;
 }
+#startButton:hover {
+  background-color: #1d37de;
+}
 
 #gameArea {
   overflow: hidden;

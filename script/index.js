@@ -12,6 +12,7 @@ let gameArea = document.getElementById('gameArea');
 const playerStartPosition = {x:player.offsetLeft, y:player.offsetTop};
 
 //game state
+let running = false;
 let lastFrameTime = undefined;
 let lastShootTime = performance.now();
 player.currentPosition = undefined;
@@ -20,6 +21,9 @@ player.currentPosition = undefined;
 
 document.getElementById('startButton')
   .addEventListener('click', () =>  {
+    if (running)
+      return;
+
     allBridges = document.getElementsByClassName('bridge');
     allCannons = document.getElementsByClassName('cannon');
     allBalls = document.getElementsByClassName('ball');
@@ -42,6 +46,7 @@ document.getElementById('startButton')
     player.currentPosition = undefined;
       
     requestAnimationFrame(animationLoop);
+    running = true;
   });
 
 
@@ -178,6 +183,7 @@ function endGame(message)
 
   setTimeout(() => {
     alert(message);
+    running = false;
 
     player.style.left = playerStartPosition.x + 'px';
     player.style.top = playerStartPosition.y + 'px';
