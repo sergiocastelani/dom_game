@@ -1,4 +1,5 @@
 import Collision from "./collision.js";
+import { getRotationAngle, rotateVector } from "./vectors.js";
 
 let allBridges = document.getElementsByClassName('bridge');
 let allCannons = document.getElementsByClassName('cannon');
@@ -116,10 +117,13 @@ function moveBalls(deltaTime)
   for(const ball of allBalls)
   {
     if (ball.currentPosition === undefined)
-      ball.currentPosition = ball.offsetTop;
+      ball.currentPosition = [ball.offsetLeft, ball.offsetTop];
 
-    ball.currentPosition += speed * deltaTime / 1000;
-    ball.style.top = ball.currentPosition + 'px';
+    let displacement = speed * deltaTime / 1000;
+    ball.currentPosition[0] += ball.direction[0] * displacement;
+    ball.currentPosition[1] += ball.direction[1] * displacement;
+    ball.style.left = ball.currentPosition[0] + 'px';
+    ball.style.top = ball.currentPosition[1] + 'px';
   }
 }
 
@@ -129,7 +133,7 @@ function removeOldBalls()
 
   for(const ball of allBalls)
   {
-    if (ball.currentPosition > gameArea.clientHeight || Collision.collideAny([ball], allRocks, 0, 10))
+    if (!Collision.collide(ball, gameArea) || Collision.collideAny([ball], allRocks, 0, 10))
       ballsToRemove.push(ball);
   }
 
@@ -146,14 +150,25 @@ function shootCannon(timestamp)
 
     for(const cannon of allCannons)
     {
-      let template = document.createElement('template');
-      template.innerHTML = '<img class="ball" src="./images/ball.png"/>';
-      let ball = template.content.firstChild;
-      ball.style.top = cannon.offsetTop + 50 + 'px';
-      ball.style.left = cannon.offsetLeft + 11 + 'px';
-      gameArea.appendChild(ball);
-    }
+      let angle = getRotationAngle(cannon);
+      let direction = rotateVector([0, -1], angle);
+      direction[1] *= -1;
 
+      let template = document.createElement('template');
+      template.innerHTML = '<img class="ball" src="./images/ball.png" width="26px" height="26px"/>';
+      let ball = template.content.firstChild;
+      gameArea.appendChild(ball);
+
+      ball.direction = direction;
+
+      const centralize = [(cannon.clientWidth - ball.clientWidth)/2, (cannon.clientHeight - ball.clientHeight)/2];
+      const offsetY = cannon.clientHeight/2 + ball.clientHeight/2;
+      const rotatedOffset = rotateVector([0, -offsetY], angle);
+      rotatedOffset[1] *= -1;
+      ball.style.left = cannon.offsetLeft + centralize[0] + rotatedOffset[0] + 'px';
+      ball.style.top = cannon.offsetTop + centralize[1] + rotatedOffset[1] + 'px';
+
+    }
   }
 }
 
