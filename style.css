@@ -4,17 +4,17 @@ body {
   justify-content: center;
   margin: 0;
   padding: 0;
+  background-color: #bce2ee;
 }
 
 #startButton {
-  padding: 10px;
+  padding: 1rem;
   margin: 0 auto;
   background-color: dodgerblue;
   color: white;
   border: 0px;
-  border-radius: 10px;
+  border-radius: 1rem;
   font-size: 24pt;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 #gameArea {
