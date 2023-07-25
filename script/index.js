@@ -13,8 +13,36 @@ const playerStartPosition = {x:player.offsetLeft, y:player.offsetTop};
 //game state
 let lastFrameTime = undefined;
 let lastShootTime = performance.now();
+player.currentPosition = undefined;
 
 //
+
+document.getElementById('startButton')
+  .addEventListener('click', () =>  {
+    allBridges = document.getElementsByClassName('bridge');
+    allCannons = document.getElementsByClassName('cannon');
+    allBalls = document.getElementsByClassName('ball');
+    allRocks = document.getElementsByClassName('rock');
+    chest = document.getElementById('chest');
+    player = document.getElementById('player');
+    gameArea = document.getElementById('gameArea');
+
+    //always the top most element
+    if (! player)
+    {
+      gameArea.innerHTML += '<img id="player" src="./images/player_stop.png"/>';
+      player = document.getElementById('player');
+    }
+    else
+      gameArea.appendChild(player);
+
+    lastFrameTime = undefined;
+    lastShootTime = performance.now();
+    player.currentPosition = undefined;
+      
+    requestAnimationFrame(animationLoop);
+  });
+
 
 function animationLoop(timestamp)
 {
@@ -138,24 +166,4 @@ function endGame(message)
 
   }, 100);
 }
-
-document.getElementById('startButton')
-  .addEventListener('click', () =>  {
-    allBridges = document.getElementsByClassName('bridge');
-    allCannons = document.getElementsByClassName('cannon');
-    allBalls = document.getElementsByClassName('ball');
-    allRocks = document.getElementsByClassName('rock');
-    chest = document.getElementById('chest');
-    player = document.getElementById('player');
-    gameArea = document.getElementById('gameArea');
-
-    //always the top most element
-    gameArea.appendChild(player);
-
-    lastFrameTime = undefined;
-    lastShootTime = performance.now();
-    player.currentPosition = undefined;
-      
-    requestAnimationFrame(animationLoop);
-  });
 
