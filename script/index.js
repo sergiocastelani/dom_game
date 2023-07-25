@@ -1,12 +1,12 @@
 import Collision from "./collision.js";
 
-const allBridges = document.getElementsByClassName('bridge');
-const allCannons = document.getElementsByClassName('cannon');
-const allBalls = document.getElementsByClassName('ball');
-const allRocks = document.getElementsByClassName('rock');
-const chest = document.getElementById('chest');
-const player = document.getElementById('player');
-const gameArea = document.getElementById('gameArea');
+let allBridges = document.getElementsByClassName('bridge');
+let allCannons = document.getElementsByClassName('cannon');
+let allBalls = document.getElementsByClassName('ball');
+let allRocks = document.getElementsByClassName('rock');
+let chest = document.getElementById('chest');
+let player = document.getElementById('player');
+let gameArea = document.getElementById('gameArea');
 
 const playerStartPosition = {x:player.offsetLeft, y:player.offsetTop};
 
@@ -37,12 +37,9 @@ function animationLoop(timestamp)
   removeOldBalls();
 
   //collisions
-  player.remove();
-  gameArea.appendChild(player);
-
   if(Collision.collide(player, chest, 10))
   {
-    endGame('Parabéns!! Vocé venceu!');
+    endGame('Parabéns!! Você venceu!');
     return;
   }
 
@@ -128,10 +125,6 @@ function shootCannon(timestamp)
 
 function endGame(message)
 {
-  lastFrameTime = undefined;
-  lastShootTime = performance.now();
-  player.currentPosition = undefined;
-
   player.src = "./images/player_stop.png";
 
   setTimeout(() => {
@@ -147,5 +140,22 @@ function endGame(message)
 }
 
 document.getElementById('startButton')
-  .addEventListener('click', () =>  requestAnimationFrame(animationLoop));
+  .addEventListener('click', () =>  {
+    allBridges = document.getElementsByClassName('bridge');
+    allCannons = document.getElementsByClassName('cannon');
+    allBalls = document.getElementsByClassName('ball');
+    allRocks = document.getElementsByClassName('rock');
+    chest = document.getElementById('chest');
+    player = document.getElementById('player');
+    gameArea = document.getElementById('gameArea');
+
+    //always the top most element
+    gameArea.appendChild(player);
+
+    lastFrameTime = undefined;
+    lastShootTime = performance.now();
+    player.currentPosition = undefined;
+      
+    requestAnimationFrame(animationLoop);
+  });
 
