@@ -13,12 +13,13 @@ body {
   background-color: dodgerblue;
   color: white;
   border: 0px;
+  border: solid 3px #203f8c;
   border-radius: 1rem;
   font-size: 24pt;
   cursor: pointer;
 }
 #startButton:hover {
-  background-color: #1d37de;
+  background-color: #374ee3;
 }
 
 #gameArea {
