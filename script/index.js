@@ -31,6 +31,9 @@ function animationLoop(timestamp)
   removeOldBalls();
 
   //collisions
+  player.remove();
+  gameArea.appendChild(player);
+  
   if(Collision.collide(player, chest, 10))
   {
     endGame('Parabéns!! Vocé venceu!');
