@@ -24,19 +24,16 @@ document.getElementById('startButton')
     if (running)
       return;
 
-    allBridges = document.getElementsByClassName('bridge');
-    allCannons = document.getElementsByClassName('cannon');
-    allBalls = document.getElementsByClassName('ball');
-    allRocks = document.getElementsByClassName('rock');
     chest = document.getElementById('chest');
     player = document.getElementById('player');
-    gameArea = document.getElementById('gameArea');
 
     //always the top most element
     if (! player)
     {
-      gameArea.innerHTML += '<img id="player" src="./images/player_stop.png"/>';
-      player = document.getElementById('player');
+      let template = document.createElement('template');
+      template.innerHTML = '<img id="player" src="./images/player_stop.png"/>';
+      player = template.content.firstChild;
+      gameArea.appendChild(player);
     }
     else
       gameArea.appendChild(player);
